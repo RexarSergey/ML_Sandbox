@@ -12,6 +12,14 @@ class PDP_TASKS_API AArenaComponent_Object : public AArenaComponent_Base
 
 public:
 	AArenaComponent_Object();
+
+	// Actor mesh setter
+	UFUNCTION(BlueprintCallable, Category="Arena Components")
+	void SetNewObjectMesh(UStaticMesh* NewMesh);
+
+	// Actor scale setter
+	UFUNCTION(BlueprintCallable, Category="Arena Components")
+	void SetNewObjectScale(FVector NewScale);
 	
 protected:
 	virtual void BeginPlay() override;
@@ -25,15 +33,6 @@ protected:
 	
 	UPROPERTY()
 	float Height;
-
-
-	// Actor mesh setter
-	UFUNCTION(BlueprintCallable, Category="Arena Components")
-	void SetMesh(UStaticMesh* NewMesh);
-
-	// Actor scale setter
-	UFUNCTION(BlueprintCallable, Category="Arena Components")
-	void SetScale(FVector NewScale);
 	
 private:
 	// Actor mesh component

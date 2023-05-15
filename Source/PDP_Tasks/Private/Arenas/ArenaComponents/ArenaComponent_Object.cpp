@@ -31,7 +31,7 @@ void AArenaComponent_Object::BeginPlay()
 	Height = GetActorScale3D().Z;
 }
 
-void AArenaComponent_Object::SetMesh(UStaticMesh* NewMesh)
+void AArenaComponent_Object::SetNewObjectMesh(UStaticMesh* NewMesh)
 {
 	// Set new mesh for component
 	MeshComponent->SetStaticMesh(NewMesh);
@@ -39,7 +39,7 @@ void AArenaComponent_Object::SetMesh(UStaticMesh* NewMesh)
 	RootComponent = MeshComponent;
 }
 
-void AArenaComponent_Object::SetScale(const FVector NewScale)
+void AArenaComponent_Object::SetNewObjectScale(const FVector NewScale)
 {
 	// Set new scale for component
 	SetActorScale3D(NewScale);

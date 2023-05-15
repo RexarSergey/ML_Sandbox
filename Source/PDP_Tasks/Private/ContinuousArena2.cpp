@@ -1,5 +1,4 @@
 #include "ContinuousArena2.h"
-
 #include "Camera/CameraActor.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"

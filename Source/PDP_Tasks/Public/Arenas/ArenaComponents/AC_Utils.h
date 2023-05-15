@@ -53,3 +53,24 @@ struct FConnections
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Connections")
 	FComponentInfo RightConnection;
 };
+
+USTRUCT(BlueprintType)
+struct FSpawnPointInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly, Category="Struct SpawnPoint Info")
+	FVector Location;
+
+	UPROPERTY(BlueprintReadOnly, Category="Struct SpawnPoint Info");
+	FRotator Rotation;
+};
+
+USTRUCT(BlueprintType)
+struct FSpawnPointsPositions
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly, Category="Struct SpawnPoints Positions")
+	TArray<FSpawnPointInfo> SpawnPointInfos;
+};
