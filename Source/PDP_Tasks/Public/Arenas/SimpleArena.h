@@ -11,10 +11,16 @@ UCLASS()
 class PDP_TASKS_API ASimpleArena : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ASimpleArena();
+
+	void Init(TSubclassOf<AArenaComponent_Object> FloorClass,
+	          TSubclassOf<AArenaComponent_Base> SpawnPointsClass,
+	          TSubclassOf<AArenaComponent_Base> TriggerClass);
+
+	FVector GetFloorScale() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,7 +29,7 @@ protected:
 	// Custom destructor
 	virtual void Destroyed() override;
 
-	// Selector of child classes AArenaComponent_Object
+	// Components classes to spawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Simple Arena Floor")
 	TSubclassOf<AArenaComponent_Object> FloorToSpawn;
 
@@ -32,7 +38,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Simple Arena Trigger")
 	TSubclassOf<AArenaComponent_Base> TriggerToSpawn;
-	
+
 
 	// Scalable params
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Simple Arena Floor")
@@ -49,20 +55,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Simple Arena SpawnPoints")
 	int SpawnPointNumber = 2;
 
-	
+
 	UPROPERTY(BlueprintReadOnly, Category="Simple Arena SpawnPoints")
 	FSpawnPointsPositions SpawnPointsPositions;
-	
+
 private:
 	// Setup functions
 	void SetupFloorComponent();
 	void SetupSpawnPointComponents();
 	void SetupTriggerComponent();
 
-	
+
 	// Calculate SpawnPoints positions to spawn
 	void CalculateSpawnPointPositions();
-	
+
 
 	// Additional component to see actor on scene
 	UPROPERTY()
@@ -78,5 +84,4 @@ private:
 
 	UPROPERTY()
 	AArenaComponent_Base* Trigger;
-	
 };

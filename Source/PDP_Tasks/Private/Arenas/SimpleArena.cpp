@@ -10,6 +10,24 @@ ASimpleArena::ASimpleArena()
 	BoxComponent->SetupAttachment(RootComponent);
 }
 
+void ASimpleArena::Init(TSubclassOf<AArenaComponent_Object> FloorClass,
+                        TSubclassOf<AArenaComponent_Base> SpawnPointsClass,
+                        TSubclassOf<AArenaComponent_Base> TriggerClass)
+{
+	FloorToSpawn = FloorClass;
+	SpawnPointsToSpawn = SpawnPointsClass;
+	TriggerToSpawn = TriggerClass;
+
+	SetupFloorComponent();
+	SetupSpawnPointComponents();
+	SetupTriggerComponent();
+}
+
+FVector ASimpleArena::GetFloorScale() const
+{
+	return FVector(FloorWidth, FloorLength, FloorHeight);
+}
+
 // Called when the game starts or when spawned
 void ASimpleArena::BeginPlay()
 {
@@ -49,7 +67,7 @@ void ASimpleArena::SetupFloorComponent()
 	// Spawn Floor component based on selected class FloorClassToSpawn
 	Floor = GetWorld()->SpawnActor<AArenaComponent_Object>(FloorToSpawn, GetActorLocation(), GetActorRotation());
 	Floor->SetNewObjectScale(FVector(FloorWidth, FloorLength, FloorHeight));
-	
+
 	CalculateSpawnPointPositions();
 }
 
