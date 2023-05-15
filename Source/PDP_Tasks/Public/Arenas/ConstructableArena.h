@@ -1,8 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ArenaComponents/ArenaComponent_Base.h"
 #include "GameFramework/Actor.h"
 #include "ConstructableArena.generated.h"
 
@@ -16,7 +15,26 @@ public:
 	AConstructableArena();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AArenaComponent_Base*> FloorList;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AArenaComponent_Base*> WallList;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AArenaComponent_Base*> OtherList;
+
+private:
+	// Additional component to see actor on scene
+	UPROPERTY()
+	UBoxComponent* BoxComponent;
+
+	// Setup floor components
+	void SetupFloor();
+	// Setup wall components
+	void SetupWall();
+	// Setup other components
+	void SetupOther();
 };

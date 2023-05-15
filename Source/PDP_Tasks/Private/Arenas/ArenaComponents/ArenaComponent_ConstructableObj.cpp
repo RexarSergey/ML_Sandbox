@@ -1,12 +1,10 @@
 #include "Arenas/ArenaComponents/ArenaComponent_ConstructableObj.h"
 
-AArenaComponent_ConstructableObj::AArenaComponent_ConstructableObj()
-{
-	// FixConnections();
-}
 
 void AArenaComponent_ConstructableObj::FixAllConnections()
 {
+	bIsFixed = true;
+	
 	FixConnection(Up, ComponentConnection.UpConnection);
 	FixConnection(Down, ComponentConnection.DownConnection);
 	FixConnection(Left, ComponentConnection.LeftConnection);
@@ -14,30 +12,23 @@ void AArenaComponent_ConstructableObj::FixAllConnections()
 }
 
 void AArenaComponent_ConstructableObj::FixConnection(const EConnectionDirection Direction,
-                                                     FConstructableComponent Connection)
+                                                     FComponentInfo Connection)
 {
-	if (Connection.ConstructableObj /*&& !Connection.bIsCatched*/)
+	AArenaComponent_ConstructableObj* ConstructableObj =
+		Cast<AArenaComponent_ConstructableObj>(Connection.ConstructableObj);
+
+	// If cast successful and component was not fixed
+	if (ConstructableObj && !(ConstructableObj->bIsFixed))
 	{
-		Connection.bIsCatched = true;
-
-		AArenaComponent_ConstructableObj* ConstructableObj =
-			Cast<AArenaComponent_ConstructableObj>(Connection.ConstructableObj);
-		if (!ConstructableObj)
-		{
-			ConstructableObj->Destroy();
-			return;
-		}
-
-		ConstructableObj->SetActorLocation(FixLocation(Direction));
+		FixLocation(Direction, ConstructableObj);
 		CheckConnections(Direction, ConstructableObj);
-
-		Connection.bIsCatched = false;
 
 		ConstructableObj->FixAllConnections();
 	}
 }
 
-FVector AArenaComponent_ConstructableObj::FixLocation(const EConnectionDirection Direction) const
+void AArenaComponent_ConstructableObj::FixLocation(const EConnectionDirection Direction,
+                                                   AArenaComponent_ConstructableObj* ConstructableObj) const
 {
 	float X = 0.f;
 	float Y = 0.f;
@@ -46,45 +37,48 @@ FVector AArenaComponent_ConstructableObj::FixLocation(const EConnectionDirection
 	switch (Direction)
 	{
 	case Up:
-		X = GetActorLocation().X + (Width * 100.f);
+		// Calculate distance by scalable params
+		X = GetActorLocation().X + (Width * 50.f) + (ConstructableObj->Width * 50.f);
 		Y = GetActorLocation().Y;
 		Z = GetActorLocation().Z;
 		break;
 
 	case Down:
-		X = GetActorLocation().X - (Width * 100.f);
+		X = GetActorLocation().X - (Width * 50.f) - (ConstructableObj->Width * 50.f);
 		Y = GetActorLocation().Y;
 		Z = GetActorLocation().Z;
 		break;
 
 	case Left:
 		X = GetActorLocation().X;
-		Y = GetActorLocation().Y - (Length * 100.f);
+		Y = GetActorLocation().Y - (Length * 50.f) - (ConstructableObj->Length * 50.f);
 		Z = GetActorLocation().Z;
 		break;
 
 	case Right:
 		X = GetActorLocation().X;
-		Y = GetActorLocation().Y + (Length * 100.f);
+		Y = GetActorLocation().Y + (Length * 50.f) + (ConstructableObj->Length * 50.f);
 		Z = GetActorLocation().Z;
 		break;
 
 	default: break;
 	}
 
-	return FVector(X, Y, Z);
+	ConstructableObj->SetActorLocation(FVector(X, Y, Z));
 }
 
-void AArenaComponent_ConstructableObj::CheckConnections(EConnectionDirection Direction,
+void AArenaComponent_ConstructableObj::CheckConnections(const EConnectionDirection Direction,
                                                         AArenaComponent_ConstructableObj* ConstructableObj)
 {
 	switch (Direction)
 	{
 	case Up:
+		// If other component does not have connection
 		if (!ConstructableObj->ComponentConnection.DownConnection.ConstructableObj)
 		{
+			// Add this component to other one
 			ConstructableObj->ComponentConnection.DownConnection.ConstructableObj = this;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
+			// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
 		}
 		break;
 
@@ -92,7 +86,7 @@ void AArenaComponent_ConstructableObj::CheckConnections(EConnectionDirection Dir
 		if (!ConstructableObj->ComponentConnection.UpConnection.ConstructableObj)
 		{
 			ConstructableObj->ComponentConnection.UpConnection.ConstructableObj = this;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
+			// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
 		}
 		break;
 
@@ -100,7 +94,7 @@ void AArenaComponent_ConstructableObj::CheckConnections(EConnectionDirection Dir
 		if (!ConstructableObj->ComponentConnection.RightConnection.ConstructableObj)
 		{
 			ConstructableObj->ComponentConnection.RightConnection.ConstructableObj = this;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
+			// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
 		}
 		break;
 
@@ -108,7 +102,7 @@ void AArenaComponent_ConstructableObj::CheckConnections(EConnectionDirection Dir
 		if (!ConstructableObj->ComponentConnection.LeftConnection.ConstructableObj)
 		{
 			ConstructableObj->ComponentConnection.LeftConnection.ConstructableObj = this;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
+			// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
 		}
 		break;
 

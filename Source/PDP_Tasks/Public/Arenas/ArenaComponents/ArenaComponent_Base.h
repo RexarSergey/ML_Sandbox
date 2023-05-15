@@ -25,7 +25,7 @@ protected:
 	TEnumAsByte<EArenaComponentType> Type;
 
 private:
-	// Additional component, to see actor on scene
+	// Additional component to see actor on scene
 	UPROPERTY()
 	UBoxComponent* BoxComponent;
 };

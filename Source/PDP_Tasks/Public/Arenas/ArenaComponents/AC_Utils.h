@@ -4,6 +4,7 @@
 #include "AC_Utils.generated.h"
 
 
+// Component types
 UENUM(BlueprintType)
 enum EArenaComponentType
 {
@@ -14,6 +15,7 @@ enum EArenaComponentType
 	Other			UMETA(DisplayName = "Other Arena Component")
 };
 
+// Components connection directions
 UENUM()
 enum EConnectionDirection
 {
@@ -23,17 +25,12 @@ enum EConnectionDirection
 	Right
 };
 
+
 USTRUCT(BlueprintType)
-struct FConstructableComponent
+struct FComponentInfo
 {
 	GENERATED_BODY();
 	
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Arena Component")
-	// bool bIsEmpty = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Arena Component")
-	bool bIsCatched = false;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Arena Component")
 	AActor* ConstructableObj;
 };
@@ -45,14 +42,14 @@ struct FConnections
 	GENERATED_BODY();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Connections")
-	FConstructableComponent UpConnection;
+	FComponentInfo UpConnection;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Connections")
-	FConstructableComponent DownConnection;
+	FComponentInfo DownConnection;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Connections")
-	FConstructableComponent LeftConnection;
+	FComponentInfo LeftConnection;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Connections")
-	FConstructableComponent RightConnection;
+	FComponentInfo RightConnection;
 };

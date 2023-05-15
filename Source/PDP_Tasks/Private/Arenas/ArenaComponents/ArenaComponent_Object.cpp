@@ -2,7 +2,7 @@
 
 
 AArenaComponent_Object::AArenaComponent_Object()
-{	
+{
 	// Creating Mesh Component for the actor
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cube Mesh"));
 
@@ -15,19 +15,25 @@ AArenaComponent_Object::AArenaComponent_Object()
 	{
 		MeshComponent->SetStaticMesh(FoundMesh.Object);
 	}
-	
+
 	RootComponent = MeshComponent;
+
+	Type = Other;
+}
+
+void AArenaComponent_Object::BeginPlay()
+{
+	Super::BeginPlay();
 
 	// Get scale params from scene
 	Width = GetActorScale3D().X;
 	Length = GetActorScale3D().Y;
 	Height = GetActorScale3D().Z;
-
-	Type = Other;
 }
 
 void AArenaComponent_Object::SetMesh(UStaticMesh* NewMesh)
 {
+	// Set new mesh for component
 	MeshComponent->SetStaticMesh(NewMesh);
 	// Update RootComponent
 	RootComponent = MeshComponent;
@@ -35,7 +41,7 @@ void AArenaComponent_Object::SetMesh(UStaticMesh* NewMesh)
 
 void AArenaComponent_Object::SetScale(const FVector NewScale)
 {
-	// Set new actor scale
+	// Set new scale for component
 	SetActorScale3D(NewScale);
 
 	// Update scale params
@@ -43,4 +49,3 @@ void AArenaComponent_Object::SetScale(const FVector NewScale)
 	Length = NewScale.Y;
 	Height = NewScale.Z;
 }
-

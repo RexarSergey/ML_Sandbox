@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -39,6 +37,7 @@ protected:
 	float CameraRotation = -90.f;
 
 private:
+	UPROPERTY()
 	TArray<AActor*> ChildrenActors;
 
 	void GetArenaParams();

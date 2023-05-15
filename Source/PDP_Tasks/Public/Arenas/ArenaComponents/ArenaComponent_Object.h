@@ -14,6 +14,8 @@ public:
 	AArenaComponent_Object();
 	
 protected:
+	virtual void BeginPlay() override;
+	
 	// Scale params
 	UPROPERTY()
 	float Width;
