@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "SimpleArena.generated.h"
 
+
 UCLASS()
 class PDP_TASKS_API ASimpleArena : public AActor
 {
@@ -16,6 +17,12 @@ public:
 	// Sets default values for this actor's properties
 	ASimpleArena();
 
+	/**
+	 * @brief Setup components
+	 * @param FloorClass Floor component
+	 * @param SpawnPointsClass SpawnPoint component
+	 * @param TriggerClass Trigger component
+	 */
 	void Init(TSubclassOf<AArenaComponent_Object> FloorClass,
 	          TSubclassOf<AArenaComponent_Base> SpawnPointsClass,
 	          TSubclassOf<AArenaComponent_Base> TriggerClass);

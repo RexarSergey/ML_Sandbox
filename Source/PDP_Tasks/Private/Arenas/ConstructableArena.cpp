@@ -1,6 +1,7 @@
 #include "Arenas/ConstructableArena.h"
 #include "Arenas/ArenaComponents/ArenaComponent_ConstructableObj.h"
 
+
 AConstructableArena::AConstructableArena()
 {
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Component"));

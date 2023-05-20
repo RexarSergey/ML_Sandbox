@@ -3,6 +3,7 @@
 #include "Arenas/ArenaComponents/ArenaComponent_Object.h"
 #include "Kismet/KismetMathLibrary.h"
 
+
 // Sets default values
 ASimpleArena::ASimpleArena()
 {

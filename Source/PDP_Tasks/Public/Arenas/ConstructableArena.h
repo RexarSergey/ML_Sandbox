@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "ConstructableArena.generated.h"
 
+
 UCLASS()
 class PDP_TASKS_API AConstructableArena : public AActor
 {
@@ -16,13 +17,16 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	
+
+	// Floor components
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<AArenaComponent_Base*> FloorList;
 
+	// Wall components
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<AArenaComponent_Base*> WallList;
 
+	// Other components
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<AArenaComponent_Base*> OtherList;
 

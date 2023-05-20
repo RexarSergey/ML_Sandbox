@@ -10,6 +10,7 @@ AArenaComponent_Base::AArenaComponent_Base()
 	Type = Base;
 }
 
+// Return component type
 EArenaComponentType AArenaComponent_Base::GetComponentType() const
 {
 	return Type;

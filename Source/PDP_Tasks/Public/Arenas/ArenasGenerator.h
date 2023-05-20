@@ -1,11 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "SimpleArena.h"
 #include "GameFramework/Actor.h"
 #include "ArenasGenerator.generated.h"
+
 
 UCLASS()
 class PDP_TASKS_API AArenasGenerator : public AActor
@@ -21,9 +20,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/**
+	 * @brief Generate multiply arenas
+	 * @param bUseInputParam Flag defining using ArenaNumber input or not
+	 * @param ArenaNumber Arena number input
+	 */
 	UFUNCTION(BlueprintCallable, Category="Arena Generator")
 	void GenerateArenas(bool bUseInputParam, int ArenaNumber);
 
+	// Destroying all generated arenas
 	UFUNCTION(BlueprintCallable, Category="Arena Generator")
 	void DestroyArenas();
 	

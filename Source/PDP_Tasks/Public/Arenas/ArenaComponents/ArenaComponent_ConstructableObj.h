@@ -6,19 +6,18 @@
 #include "ArenaComponent_ConstructableObj.generated.h"
 
 
-
 UCLASS()
 class PDP_TASKS_API AArenaComponent_ConstructableObj : public AArenaComponent_Object
 {
 	GENERATED_BODY()
 
 public:
-	// Connect the components together
+	// Connect other components together
 	UFUNCTION(BlueprintCallable, Category="Arena Components")
 	void FixAllConnections();
 	
 protected:
-	// Components connections with another ones
+	// Component connections with another ConstructableObj
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Arena Components")
 	FConnections ComponentConnection;
 
@@ -26,13 +25,25 @@ protected:
 	bool bIsFixed = false;
 
 private:
-	// Fix the connection in a certain direction and call fix function in other components
+	/**
+	 * @brief Fix the connection in a certain direction and call fix function in other components
+	 * @param Direction Connection direction type (Up, Down, Left, Right)
+	 * @param Connection Connection from struct
+	 */
 	void FixConnection(EConnectionDirection Direction, FComponentInfo Connection);
 
-	// Fix the components location in a certain direction
+	/**
+	 * @brief Fix the components location in a certain direction
+	 * @param Direction Connection direction type (Up, Down, Left, Right)
+	 * @param ConstructableObj Component, that connected with current one
+	 */
 	void FixLocation(EConnectionDirection Direction, AArenaComponent_ConstructableObj* ConstructableObj) const;
-
-	// Check and add connection between components
+	
+	/**
+	 * @brief Check and add connection between components
+	 * @param Direction Connection direction type (Up, Down, Left, Right)
+	 * @param ConstructableObj Component, that connected with current one
+	 */
 	void CheckConnections(EConnectionDirection Direction, AArenaComponent_ConstructableObj* ConstructableObj);
 };
 

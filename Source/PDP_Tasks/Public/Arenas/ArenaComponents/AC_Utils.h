@@ -25,7 +25,7 @@ enum EConnectionDirection
 	Right
 };
 
-
+// Information about other ConstructableObj
 USTRUCT(BlueprintType)
 struct FComponentInfo
 {
@@ -35,12 +35,12 @@ struct FComponentInfo
 	AActor* ConstructableObj;
 };
 
-
+// List of connections
 USTRUCT(BlueprintType)
 struct FConnections
 {
 	GENERATED_BODY();
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Struct Connections")
 	FComponentInfo UpConnection;
 
@@ -54,6 +54,7 @@ struct FConnections
 	FComponentInfo RightConnection;
 };
 
+// Information about SpawnPoint
 USTRUCT(BlueprintType)
 struct FSpawnPointInfo
 {
@@ -66,6 +67,7 @@ struct FSpawnPointInfo
 	FRotator Rotation;
 };
 
+// List of SpawnPoints
 USTRUCT(BlueprintType)
 struct FSpawnPointsPositions
 {

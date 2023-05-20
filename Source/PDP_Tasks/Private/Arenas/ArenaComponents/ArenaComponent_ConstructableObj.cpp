@@ -3,6 +3,7 @@
 
 void AArenaComponent_ConstructableObj::FixAllConnections()
 {
+	// Set flag to prevent fixing current component
 	bIsFixed = true;
 	
 	FixConnection(Up, ComponentConnection.UpConnection);
@@ -11,9 +12,11 @@ void AArenaComponent_ConstructableObj::FixAllConnections()
 	FixConnection(Right, ComponentConnection.RightConnection);
 }
 
+
 void AArenaComponent_ConstructableObj::FixConnection(const EConnectionDirection Direction,
                                                      FComponentInfo Connection)
 {
+	// Cast to AArenaComponent_ConstructableObj
 	AArenaComponent_ConstructableObj* ConstructableObj =
 		Cast<AArenaComponent_ConstructableObj>(Connection.ConstructableObj);
 
@@ -37,7 +40,7 @@ void AArenaComponent_ConstructableObj::FixLocation(const EConnectionDirection Di
 	switch (Direction)
 	{
 	case Up:
-		// Calculate distance by scalable params
+		// Calculate distance by using scalable params
 		X = GetActorLocation().X + (Width * 50.f) + (ConstructableObj->Width * 50.f);
 		Y = GetActorLocation().Y;
 		Z = GetActorLocation().Z;
@@ -76,7 +79,7 @@ void AArenaComponent_ConstructableObj::CheckConnections(const EConnectionDirecti
 		// If other component does not have connection
 		if (!ConstructableObj->ComponentConnection.DownConnection.ConstructableObj)
 		{
-			// Add this component to other one
+			// Add this component to other component
 			ConstructableObj->ComponentConnection.DownConnection.ConstructableObj = this;
 			// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Changed"));
 		}
