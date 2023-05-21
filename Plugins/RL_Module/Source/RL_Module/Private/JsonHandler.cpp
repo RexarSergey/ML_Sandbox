@@ -37,23 +37,23 @@ FString JsonHandler::CreateJson(TSharedPtr<FJsonObject> JsonObject, bool& bSucce
 	return Out;
 }
 
-FGymCommandStruct JsonHandler::ReadFGymCommandStruct(FString JsonString, bool& bSuccess)
+FPythonCommandStruct JsonHandler::ReadFGymCommandStruct(FString JsonString, bool& bSuccess)
 {
 	TSharedPtr<FJsonObject> JsonObject = ReadJson(JsonString, bSuccess);
 	if (!bSuccess) {
-		return FGymCommandStruct();
+		return FPythonCommandStruct();
 	}
-	FGymCommandStruct Out;
-	if (!FJsonObjectConverter::JsonObjectToUStruct<FGymCommandStruct>(JsonObject.ToSharedRef(), &Out)) {
+	FPythonCommandStruct Out;
+	if (!FJsonObjectConverter::JsonObjectToUStruct<FPythonCommandStruct>(JsonObject.ToSharedRef(), &Out)) {
 		bSuccess = false;
-		return FGymCommandStruct();
+		return FPythonCommandStruct();
 	}
 	bSuccess = true;
 
 	return Out;
 }
 
-FString JsonHandler::CreateFGymCommandStruct(FGymCommandStruct StepStruct, bool& bSuccess)
+FString JsonHandler::CreateFPythonCommandStruct(FPythonCommandStruct StepStruct, bool& bSuccess)
 {
 	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(StepStruct);
 	if (JsonObject == nullptr) {
@@ -81,6 +81,33 @@ FGymStateStruct JsonHandler::ReadFGymStateStruct(FString JsonString, bool& bSucc
 }
 
 FString JsonHandler::CreateFGymStateStruct(FGymStateStruct StepStruct, bool& bSuccess)
+{
+	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(StepStruct);
+	if (JsonObject == nullptr) {
+		bSuccess = false;
+		return FString();
+	}
+
+	return CreateJson(JsonObject, bSuccess);
+}
+
+FDQNLearningStruct JsonHandler::ReadFDQNLearningStruct(FString JsonString, bool& bSuccess)
+{
+	TSharedPtr<FJsonObject> JsonObject = ReadJson(JsonString, bSuccess);
+	if (!bSuccess) {
+		return FDQNLearningStruct();
+	}
+	FDQNLearningStruct Out;
+	if (!FJsonObjectConverter::JsonObjectToUStruct<FDQNLearningStruct>(JsonObject.ToSharedRef(), &Out)) {
+		bSuccess = false;
+		return FDQNLearningStruct();
+	}
+	bSuccess = true;
+
+	return Out;
+}
+
+FString JsonHandler::CreateFDQNLearningStruct(FDQNLearningStruct StepStruct, bool& bSuccess)
 {
 	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(StepStruct);
 	if (JsonObject == nullptr) {

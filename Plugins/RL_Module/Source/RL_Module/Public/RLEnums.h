@@ -22,6 +22,7 @@ enum ECommandEnum
 	State        UMETA(DisplayName = "State (Gym)"),
 	Reward        UMETA(DisplayName = "Reward (Gym)"),
 	IsDone        UMETA(DisplayName = "Done (Gym)"),
+	GetDQNLearning UMETA(DisplayName = "Get Network (RL Model)")
 
 };
 

@@ -39,7 +39,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void GymCall(FGymCommandStruct Data);
+	void PythonCall(FPythonCommandStruct Data);
 
 	FSocket* CreateTCPConnectionListener(const FString& YourChosenSocketName, const FString& TheIP, const int32 ThePort, const int32 ReceiveBufferSize);
 	void TCPConnectionListener();
@@ -64,6 +64,8 @@ public:
 	float GetReward();
 
 	bool IsDone();
+
+	void GetDQNLearning();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params")
 		ARLEnviromentBase* Enviroment;

@@ -7,17 +7,18 @@
 
 
 USTRUCT(BlueprintType)
-struct RL_MODULE_API FGymCommandStruct
+struct RL_MODULE_API FPythonCommandStruct
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FGymCommandStruct Json")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FPythonCommandStruct Json")
 	int32 id;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FGymCommandStruct Json")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FPythonCommandStruct Json")
 	TArray<float> action;
 
 };
+
 
 USTRUCT(BlueprintType)
 struct RL_MODULE_API FGymStateStruct
@@ -36,6 +37,17 @@ struct RL_MODULE_API FGymStateStruct
 };
 
 
+USTRUCT(BlueprintType)
+struct RL_MODULE_API FDQNLearningStruct
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FDQNLearningStruct Json")
+		TArray<int32> Network;
+
+};
+
+
 /**
  * 
  */
@@ -48,10 +60,13 @@ public:
 	static TSharedPtr<FJsonObject> ReadJson(FString JsonString, bool& bSuccess);
 	static FString CreateJson(TSharedPtr<FJsonObject> JsonObject, bool& bSuccess);
 
-	static FGymCommandStruct ReadFGymCommandStruct(FString JsonString, bool& bSuccess);
-	static FString CreateFGymCommandStruct(FGymCommandStruct StepStruct, bool& bSuccess);
+	static FPythonCommandStruct ReadFGymCommandStruct(FString JsonString, bool& bSuccess);
+	static FString CreateFPythonCommandStruct(FPythonCommandStruct StepStruct, bool& bSuccess);
 
 	static FGymStateStruct ReadFGymStateStruct(FString JsonString, bool& bSuccess);
 	static FString CreateFGymStateStruct(FGymStateStruct StepStruct, bool& bSuccess);
+
+	static FDQNLearningStruct ReadFDQNLearningStruct(FString JsonString, bool& bSuccess);
+	static FString CreateFDQNLearningStruct(FDQNLearningStruct StepStruct, bool& bSuccess);
 
 };

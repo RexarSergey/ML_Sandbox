@@ -191,8 +191,8 @@ void AAIServer::TCPSocketListener()
 
 		UE_LOG(LogTemp, Warning, TEXT("READ Bytes: %d; String: %s"), BytesRead, *StringData);
 		bool bS;
-		FGymCommandStruct s = JsonHandler::ReadFGymCommandStruct(StringFromBinaryArray(Data), bS);
-		GymCall(s);
+		FPythonCommandStruct s = JsonHandler::ReadFGymCommandStruct(StringFromBinaryArray(Data), bS);
+		PythonCall(s);
 
 	}
 }
@@ -208,7 +208,7 @@ void AAIServer::TCPSocketNotifier()
 	UE_LOG(LogTemp, Warning, TEXT("Notify!"));
 }
 
-void AAIServer::GymCall(FGymCommandStruct Data)
+void AAIServer::PythonCall(FPythonCommandStruct Data)
 {
 	TEnumAsByte<ECommandEnum> Command(Data.id);
 
@@ -228,6 +228,9 @@ void AAIServer::GymCall(FGymCommandStruct Data)
 		break;
 	case ECommandEnum::IsDone:
 		IsDone();
+		break;
+	case ECommandEnum::GetDQNLearning:
+		GetDQNLearning();
 		break;
 	default:
 		break;
@@ -328,5 +331,19 @@ bool AAIServer::IsDone()
 	ConnectionNotifySocket->Send((uint8*)Converted.Get(), Converted.Length(), BytesSent);
 	UE_LOG(LogTemp, Warning, TEXT("Bytes Sent: %d; Sent String: %s"), Converted.Length(), *SendString);
 	return SendStruct.IsDone;
+}
+
+void AAIServer::GetDQNLearning()
+{
+	FDQNLearningStruct SendStruct;
+	FString SendString;
+	int32 BytesSent;
+	bool b;
+
+	SendStruct.Network = Enviroment->NetworkNeurones;
+	SendString = JsonHandler::CreateFDQNLearningStruct(SendStruct, b);
+	FTCHARToUTF8 Converted(*SendString);
+	ConnectionNotifySocket->Send((uint8*)Converted.Get(), Converted.Length(), BytesSent);
+	UE_LOG(LogTemp, Warning, TEXT("Bytes Sent: %d; Sent String: %s"), Converted.Length(), *SendString);
 }
 
