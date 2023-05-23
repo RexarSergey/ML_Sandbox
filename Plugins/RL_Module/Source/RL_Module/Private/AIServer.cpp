@@ -22,7 +22,7 @@ void AAIServer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ListenSocket = CreateTCPConnectionListener(FString("Listen"), FString("26.225.53.123"), 7787, 65507u);
+	ListenSocket = CreateTCPConnectionListener(FString("Listen"), Host, Port, 65507u);
 	if (!ListenSocket)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Socket create failed"));
@@ -32,7 +32,7 @@ void AAIServer::BeginPlay()
 	GetWorldTimerManager().SetTimer(Handle1, this,
 		&AAIServer::TCPConnectionListener, 0.01, true);
 
-	NotifySocket = CreateTCPConnectionNotifier(FString("Notify"), FString("26.225.53.123"), 7786, 65507u);
+	NotifySocket = CreateTCPConnectionNotifier(FString("Notify"), Host, Port-1, 65507u);
 	if (!NotifySocket)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Socket create failed"));
