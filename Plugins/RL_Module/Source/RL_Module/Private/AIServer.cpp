@@ -280,7 +280,10 @@ void AAIServer::ShutDownServer() {
 
 void AAIServer::RunFit()
 {
-	FString pythonPath = FPaths::ProjectPluginsDir() + PythonPath;
+	FString pythonPath = "";
+	if (PythonPath == "") {
+		pythonPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\venv\\Scripts\\python.exe";
+	}
 	FString savePath;
 	if (Enviroment->SaveDirectory == "") {
 		savePath = "saved\\" + Enviroment->SaveFileName;
@@ -313,7 +316,10 @@ void AAIServer::RunFit()
 
 void AAIServer::RunAI()
 {
-	FString pythonPath = FPaths::ProjectPluginsDir() + PythonPath;
+	FString pythonPath = "";
+	if (PythonPath == "") {
+		pythonPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\venv\\Scripts\\python.exe";
+	}
 	FString savePath;
 	if (Enviroment->SaveDirectory == "") {
 		savePath = "saved\\" + Enviroment->SaveFileName;
