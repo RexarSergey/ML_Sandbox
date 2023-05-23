@@ -16,17 +16,17 @@ void AArenasGenerator::BeginPlay()
 
 void AArenasGenerator::GenerateArenas(const bool bUseInputParam, const int ArenaNumber)
 {
-	DestroyArenas();
+	if (!ArenasList.IsEmpty()) DestroyArenas();
 
 	if (!(ArenaToSpawn && FloorClass && SpawnPointClass && TriggerClass)) return;
 
 	int Number = NumberToSpawn;
 	if (bUseInputParam) Number = ArenaNumber;
-
+	if (Number < 1 || Number > 30) Number = 1;
 
 	FVector Loc = GetActorLocation();
 	const FRotator Rot = GetActorRotation();
-	
+
 	for (int i = 0; i < Number; ++i)
 	{
 		// Spawn new arena

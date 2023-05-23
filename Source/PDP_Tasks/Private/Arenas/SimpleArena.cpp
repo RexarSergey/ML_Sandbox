@@ -15,6 +15,11 @@ void ASimpleArena::Init(TSubclassOf<AArenaComponent_Object> FloorClass,
                         TSubclassOf<AArenaComponent_Base> SpawnPointsClass,
                         TSubclassOf<AArenaComponent_Base> TriggerClass)
 {
+	// if(FloorClass)
+	// {
+	// 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Floor"));
+	// }
+	
 	FloorToSpawn = FloorClass;
 	SpawnPointsToSpawn = SpawnPointsClass;
 	TriggerToSpawn = TriggerClass;
