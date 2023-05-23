@@ -3,7 +3,7 @@ from release.client.RequestConfig import RequestConfig
 import json
 
 
-class CommandState(CommandBase):
+class CommandGetGymStruct(CommandBase):
 
     def __init__(self, s_write, s_read):
         super().__init__()
@@ -19,11 +19,11 @@ class CommandState(CommandBase):
             received = self.s_read.recv(2048)
             received = received.decode('utf-8')
             received = json.loads(received)
-            print("get: command state")
-            print(received['state'][0])
-            return received['state'][0]
+            if self.log_action:
+                print("get: get_gym_struct")
+            return received
         except:
-            print("CommandState: connection failed or interrupted")
+            print("is_done: connection failed or interrupted")
 
     def get_data(self, **data):
-        return {'id': self.config['state'], 'action': [0]}
+        return {'id': self.config['get_gym_struct'], 'action': [0]}

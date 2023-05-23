@@ -91,13 +91,13 @@ public:
 		FString PythonPath = FString("RL_Module\\Content\\venv\\Scripts\\python.exe");
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
-		FString PythonProgrammFitPath = FString("C:\\Users\\andre\\PycharmProjects\\RL_Module\\release\\run_fit.py");
+		FString PythonProgrammFitPath = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
-		FString PythonProgrammRunPath = FString("C:\\Users\\andre\\PycharmProjects\\RL_Module\\release\\run_ai.py");
+		FString PythonProgrammRunPath = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
-		FString OptionalWorkingDirectory = "C:\\Users\\andre\\PycharmProjects\\RL_Module\\";
+		FString OptionalWorkingDirectory = "";
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params")

@@ -7,7 +7,7 @@ from release.client.command.CommandReset import CommandReset
 from release.client.command.CommandIsDone import CommandIsDone
 from release.client.command.CommandStep import CommandStep
 from release.client.command.CommandWait import CommandWait
-from release.client.command.CommandGetNetwork import CommandGetNetwork
+from release.client.command.CommandGetDQNStruct import CommandGetDQNStruct
 
 
 class ClientCommunication:
@@ -18,18 +18,22 @@ class ClientCommunication:
 
         self.host = host
         self.port = port
+        self.success = False
 
         try:
             self.s_write.connect((self.host, self.port))
+            self.success = True
             print("connected! (main)")
         except:
             print("connection failed or interrupted (main)")
 
         try:
             self.s_read.connect((self.host, self.port - 1))
+            self.success = True
             print("connected! (notify)")
         except:
             print("connection failed or interrupted (notify)")
+
 
     def step(self, action):
         comm = CommandStep(self.s_write, self.s_read)
@@ -51,8 +55,8 @@ class ClientCommunication:
         comm = CommandIsDone(self.s_write, self.s_read)
         return comm.perform_action()
 
-    def get_network(self):
-        comm = CommandGetNetwork(self.s_write, self.s_read)
+    def get_dqn_struct(self):
+        comm = CommandGetDQNStruct(self.s_write, self.s_read)
         return comm.perform_action()
 
     def wait(self):

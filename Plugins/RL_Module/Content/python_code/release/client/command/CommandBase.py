@@ -1,5 +1,6 @@
 class CommandBase:
     name = ""
+    log_action = False
 
     def __init__(self):
         pass

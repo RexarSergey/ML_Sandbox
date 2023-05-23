@@ -16,23 +16,25 @@ class CommandStep(CommandBase):
         self.config = RequestConfig.ue_commands
 
     def perform_action(self, **action_data):
-        # try:
-        data = self.get_data(**action_data)
-        print(data)
-        self.s_write.sendall(bytes(json.dumps(data), encoding="utf-8"))
-        print("post: step")
 
-        wait = CommandWait(self.s_read)
-        wait.perform_action()
+        try:
+            data = self.get_data(**action_data)
+            # print(data)
+            self.s_write.sendall(bytes(json.dumps(data), encoding="utf-8"))
+            if self.log_action:
+                print("post: step")
 
-        info_ = {}
-        observation_ = CommandState(self.s_write, self.s_read).perform_action()
-        reward_ = CommandReward(self.s_write, self.s_read).perform_action()
-        done_ = CommandIsDone(self.s_write, self.s_read).perform_action()
-        return observation_, reward_, done_, info_
+            wait = CommandWait(self.s_read)
+            wait.perform_action()
 
-    # except:
-    #     print("step: connection failed or interrupted")
+            info_ = {}
+            observation_ = CommandState(self.s_write, self.s_read).perform_action()
+            reward_ = CommandReward(self.s_write, self.s_read).perform_action()
+            done_ = CommandIsDone(self.s_write, self.s_read).perform_action()
+            return observation_, reward_, done_, info_
+
+        except:
+            print("step: connection failed or interrupted")
 
     def get_data(self, **action_data):
         action = action_data['action']

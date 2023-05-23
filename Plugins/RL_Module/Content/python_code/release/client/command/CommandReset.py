@@ -1,9 +1,11 @@
 from release.client.command.CommandBase import CommandBase
 from release.client.RequestConfig import RequestConfig
+from release.client.command.CommandState import CommandState
+from release.client.command.CommandWait import CommandWait
 import json
 
 
-class CommandReward(CommandBase):
+class CommandReset(CommandBase):
 
     def __init__(self, s_write, s_read):
         super().__init__()
@@ -15,15 +17,16 @@ class CommandReward(CommandBase):
         try:
             data = self.get_data(**action_data)
             self.s_write.sendall(bytes(json.dumps(data), encoding="utf-8"))
+            if self.log_action:
+                print("post: reset")
 
-            received = self.s_read.recv(2048)
-            received = received.decode('utf-8')
-            received = json.loads(received)
-            print("get: reward")
-            return received['reward']
+            wait = CommandWait(self.s_read)
+            wait.perform_action()
+            state = CommandState(self.s_write, self.s_read)
+            return state.perform_action()
 
         except:
-            print("reward: connection failed or interrupted")
+            print("reset: connection failed or interrupted")
 
     def get_data(self, **data):
-        return {'id': self.config['reward'], 'action': [0]}
+        return {'id': self.config['reset'], 'action': [0]}

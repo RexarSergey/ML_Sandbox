@@ -1,11 +1,9 @@
 from release.client.command.CommandBase import CommandBase
 from release.client.RequestConfig import RequestConfig
-from release.client.command.CommandState import CommandState
-from release.client.command.CommandWait import CommandWait
 import json
 
 
-class CommandReset(CommandBase):
+class CommandGetDQNStruct(CommandBase):
 
     def __init__(self, s_write, s_read):
         super().__init__()
@@ -17,15 +15,15 @@ class CommandReset(CommandBase):
         try:
             data = self.get_data(**action_data)
             self.s_write.sendall(bytes(json.dumps(data), encoding="utf-8"))
-            print("post: reset")
 
-            wait = CommandWait(self.s_read)
-            wait.perform_action()
-            state = CommandState(self.s_write, self.s_read)
-            return state.perform_action()
-
+            received = self.s_read.recv(2048)
+            received = received.decode('utf-8')
+            received = json.loads(received)
+            if self.log_action:
+                print("get: get_dqn_struct")
+            return received
         except:
-            print("reset: connection failed or interrupted")
+            print("is_done: connection failed or interrupted")
 
     def get_data(self, **data):
-        return {'id': self.config['reset'], 'action': [0]}
+        return {'id': self.config['get_dqn_struct'], 'action': [0]}

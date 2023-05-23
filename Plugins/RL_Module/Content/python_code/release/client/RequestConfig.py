@@ -5,7 +5,8 @@ class RequestConfig:
                    "reward": 3,
                    "is_done": 4,
 
-                   "get_network": 5}
+                   "get_dqn_struct": 5,
+                   "get_gym_struct": 6}
 
     def get_tasks(self):
         return self.ue_commands

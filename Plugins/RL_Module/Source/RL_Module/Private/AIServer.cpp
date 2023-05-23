@@ -283,7 +283,7 @@ void AAIServer::RunFit()
 	FString pythonPath = FPaths::ProjectPluginsDir() + PythonPath;
 	FString savePath;
 	if (Enviroment->SaveDirectory == "") {
-		savePath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+		savePath = "saved\\" + Enviroment->SaveFileName;
 	}
 	else {
 		savePath = Enviroment->SaveDirectory + "\\" + Enviroment->SaveFileName;
@@ -291,11 +291,20 @@ void AAIServer::RunFit()
 
 	FString loadPath;
 	if (Enviroment->LoadDirectory == "") {
-		loadPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+		loadPath = "saved\\" + Enviroment->SaveFileName;
 	}
 	else {
 		loadPath = Enviroment->LoadDirectory + "\\" + Enviroment->SaveFileName;
 	}
+
+	if (OptionalWorkingDirectory == "") {
+		OptionalWorkingDirectory = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\python_code\\";
+	}
+
+	if (PythonProgrammFitPath == "") {
+		PythonProgrammFitPath = "release\\run_fit.py";
+	}
+
 
 	FString params = PythonProgrammFitPath + " " + Host + " " + FString::FromInt(Port)
 		+ " " + savePath + " " + loadPath;
@@ -307,7 +316,7 @@ void AAIServer::RunAI()
 	FString pythonPath = FPaths::ProjectPluginsDir() + PythonPath;
 	FString savePath;
 	if (Enviroment->SaveDirectory == "") {
-		savePath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+		savePath = "saved\\" + Enviroment->SaveFileName;
 	}
 	else {
 		savePath = Enviroment->SaveDirectory + "\\" + Enviroment->SaveFileName;
@@ -315,11 +324,21 @@ void AAIServer::RunAI()
 
 	FString loadPath;
 	if (Enviroment->LoadDirectory == "") {
-		loadPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+		loadPath = "saved\\" + Enviroment->SaveFileName;
 	}
 	else {
 		loadPath = Enviroment->LoadDirectory + "\\" + Enviroment->SaveFileName;
 	}
+
+	if (OptionalWorkingDirectory == "") {
+		OptionalWorkingDirectory = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\python_code\\";
+	}
+
+	if (PythonProgrammRunPath == "") {
+		PythonProgrammRunPath = "release\\run_ai.py";
+
+	}
+
 
 	FString params = PythonProgrammRunPath + " " + Host + " " + FString::FromInt(Port)
 		+ " " + savePath + " " + loadPath;

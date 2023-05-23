@@ -3,7 +3,7 @@ from release.client.RequestConfig import RequestConfig
 import json
 
 
-class CommandIsDone(CommandBase):
+class CommandReward(CommandBase):
 
     def __init__(self, s_write, s_read):
         super().__init__()
@@ -19,10 +19,13 @@ class CommandIsDone(CommandBase):
             received = self.s_read.recv(2048)
             received = received.decode('utf-8')
             received = json.loads(received)
-            print("get: is_done")
-            return received['isDone']
+
+            if self.log_action:
+                print("get: reward")
+            return received['reward']
+
         except:
-            print("is_done: connection failed or interrupted")
+            print("reward: connection failed or interrupted")
 
     def get_data(self, **data):
-        return {'id': self.config['is_done'], 'action': [0]}
+        return {'id': self.config['reward'], 'action': [0]}
