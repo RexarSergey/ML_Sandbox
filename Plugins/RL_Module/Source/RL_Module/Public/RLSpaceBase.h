@@ -22,7 +22,7 @@ struct RL_MODULE_API FRLSpaceBase
 		TArray<float> High;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space")
-	TEnumAsByte<ESpaceEnum> Space;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space")
+	//TEnumAsByte<ESpaceEnum> Space;
 
 };

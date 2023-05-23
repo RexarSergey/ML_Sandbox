@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "RLEnums.h"
 #include "JsonHandler.generated.h"
 
 
@@ -26,13 +27,13 @@ struct RL_MODULE_API FGymStateStruct
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FGymStateStruct Json")
-		bool IsDone;
+		bool IsDone = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FGymStateStruct Json")
 		TArray<float> State;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FGymStateStruct Json")
-		float Reward;
+		float Reward = .0f;
 
 };
 
@@ -42,8 +43,56 @@ struct RL_MODULE_API FDQNLearningStruct
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FDQNLearningStruct Json")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space Box (ObservationSpace)")
+	TArray<float> Low;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space Box (ObservationSpace)")
+	TArray<float> High;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space Box (ActionSpace)")
+		int32 ActionLength;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
 		TArray<int32> Network;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		TArray<FString> Activations;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		TEnumAsByte<EOptimizer> Optimizer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		float LearningRate = 0.01;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		int32 Steps = 1000;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		int32 StepsWarmup = 10;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		float TargetModelUpdate = 1e-3f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
+		TArray<TEnumAsByte<EMetric>> Metrics;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Policy")
+		TEnumAsByte<EPolicy> Policy;
+
+
+
+};
+
+USTRUCT(BlueprintType)
+struct RL_MODULE_API FGymStruct
+{
+	GENERATED_BODY()
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FDQNLearningStruct Json")
+		TArray<int32> Network;
+
 
 };
 

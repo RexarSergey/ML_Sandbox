@@ -27,3 +27,31 @@ enum ECommandEnum
 };
 
 
+UENUM(BlueprintType)
+enum EPolicy
+{
+	BoltzmannQPolicy     UMETA(DisplayName = "Boltzmann QPolicy"),
+	EpsGreedyQPolicy	 UMETA(DisplayName = "EpsGreedy QPolicy"),
+	SoftmaxPolicy		 UMETA(DisplayName = "Softmax Policy"),
+	GreedyQPolicy		 UMETA(DisplayName = "Greedy QPolicy"),
+	MaxBoltzmannQPolicy  UMETA(DisplayName = "Max Boltzmann QPolicy"),
+};
+
+UENUM(BlueprintType)
+enum EMetric
+{
+	MAE     UMETA(DisplayName = "mae"),
+	MSE		UMETA(DisplayName = "mse"),
+	RMSE    UMETA(DisplayName = "rmse"),
+	MSLE	UMETA(DisplayName = "msle"),
+	LCE     UMETA(DisplayName = "lce"),
+};
+
+
+UENUM(BlueprintType)
+enum EOptimizer
+{
+	Adam     UMETA(DisplayName = "Adam"),
+	RMSprop		UMETA(DisplayName = "RMSprop"),
+	SGD    UMETA(DisplayName = "SGD"),
+};

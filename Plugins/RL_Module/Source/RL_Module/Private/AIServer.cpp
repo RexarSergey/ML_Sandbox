@@ -42,6 +42,7 @@ void AAIServer::BeginPlay()
 	FTimerHandle Handle2;
 	GetWorldTimerManager().SetTimer(Handle2, this,
 		&AAIServer::TCPConnectionNotifier, 0.01, true);
+
 }
 
 
@@ -270,7 +271,59 @@ void AAIServer::ShutDownServer() {
 
 	}
 
+	if (ProcHandle.IsValid()) {
+		ProcHandle.Reset();
+	}
+
 	Destroy();
+}
+
+void AAIServer::RunFit()
+{
+	FString pythonPath = FPaths::ProjectPluginsDir() + PythonPath;
+	FString savePath;
+	if (Enviroment->SaveDirectory == "") {
+		savePath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+	}
+	else {
+		savePath = Enviroment->SaveDirectory + "\\" + Enviroment->SaveFileName;
+	}
+
+	FString loadPath;
+	if (Enviroment->LoadDirectory == "") {
+		loadPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+	}
+	else {
+		loadPath = Enviroment->LoadDirectory + "\\" + Enviroment->SaveFileName;
+	}
+
+	FString params = PythonProgrammFitPath + " " + Host + " " + FString::FromInt(Port)
+		+ " " + savePath + " " + loadPath;
+	ProcHandle = FPlatformProcess::CreateProc(*pythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
+}
+
+void AAIServer::RunAI()
+{
+	FString pythonPath = FPaths::ProjectPluginsDir() + PythonPath;
+	FString savePath;
+	if (Enviroment->SaveDirectory == "") {
+		savePath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+	}
+	else {
+		savePath = Enviroment->SaveDirectory + "\\" + Enviroment->SaveFileName;
+	}
+
+	FString loadPath;
+	if (Enviroment->LoadDirectory == "") {
+		loadPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\" + Enviroment->SaveFileName;
+	}
+	else {
+		loadPath = Enviroment->LoadDirectory + "\\" + Enviroment->SaveFileName;
+	}
+
+	FString params = PythonProgrammRunPath + " " + Host + " " + FString::FromInt(Port)
+		+ " " + savePath + " " + loadPath;
+	ProcHandle = FPlatformProcess::CreateProc(*pythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
 }
 
 void AAIServer::Step(TArray<float> Action)
@@ -335,12 +388,14 @@ bool AAIServer::IsDone()
 
 void AAIServer::GetDQNLearning()
 {
+	UE_LOG(LogTemp, Warning, TEXT("HERE"));
 	FDQNLearningStruct SendStruct;
 	FString SendString;
 	int32 BytesSent;
 	bool b;
-
-	SendStruct.Network = Enviroment->NetworkNeurones;
+	SendStruct = Enviroment->DQNStruct;
+	//SendStruct.Network = Enviroment->NetworkNeurones;
+	//SendStruct.Activations = Enviroment->NetworkActivations;
 	SendString = JsonHandler::CreateFDQNLearningStruct(SendStruct, b);
 	FTCHARToUTF8 Converted(*SendString);
 	ConnectionNotifySocket->Send((uint8*)Converted.Get(), Converted.Length(), BytesSent);

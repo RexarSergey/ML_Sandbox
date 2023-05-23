@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "RLSpaceBase.h"
+#include "JsonHandler.h"
+#include "RLEnums.h"
 #include "RLEnviromentBase.generated.h"
 
 
@@ -54,24 +56,20 @@ public:
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Observation Space")
-	FRLSpaceBase ObservationSpace;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Action Space")
-	FRLSpaceBase ActionSpace;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Action Space")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Current Action")
 	TArray<float> Action;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Network")
-		TArray<int32> NetworkNeurones;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Network")
-		TArray<FString> NetworkActivations;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save and Load")
+		FString SaveFileName = "agent_name";
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save and Load|Advanced")
+		FString SaveDirectory = "";
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
-		float LearningRate;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save and Load|Advanced")
+		FString LoadDirectory = "";
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learn")
-		int32 Steps;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DQN Struct")
+		FDQNLearningStruct DQNStruct;
+
 };

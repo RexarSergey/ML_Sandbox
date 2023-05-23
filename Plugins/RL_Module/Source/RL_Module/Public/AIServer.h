@@ -8,15 +8,18 @@
 #include <iostream>
 #include "JsonHandler.h"
 #include "RLEnviromentBase.h"
+#include "Misc/Paths.h"
+#include "Interfaces/IPluginManager.h"
 #include "AIServer.generated.h"
+//#include "C:\Users\andre\PycharmProjects\RL_Module\venv\Lib\site-packages\tensorflow\include\external\local_config_python\python_include"
 
 
 UCLASS()
 class RL_MODULE_API AAIServer : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AAIServer();
 
@@ -33,9 +36,10 @@ protected:
 
 	FIPv4Endpoint RemoteAddressForConnection;
 
+	FProcHandle ProcHandle;
 
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -53,7 +57,13 @@ public:
 	FString StringFromBinaryArray(TArray<uint8> BinaryArray);
 
 	UFUNCTION(BlueprintCallable, Category = Server)
-	void ShutDownServer();
+		void ShutDownServer();
+
+	UFUNCTION(BlueprintCallable, Category = Server)
+		void RunFit();
+
+	UFUNCTION(BlueprintCallable, Category = Server)
+		void RunAI();
 
 	void Step(TArray<float> Action);
 
@@ -76,6 +86,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params")
 		int32 Port;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
+		FString PythonPath = FString("RL_Module\\Content\\venv\\Scripts\\python.exe");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
+		FString PythonProgrammFitPath = FString("C:\\Users\\andre\\PycharmProjects\\RL_Module\\release\\run_fit.py");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
+		FString PythonProgrammRunPath = FString("C:\\Users\\andre\\PycharmProjects\\RL_Module\\release\\run_ai.py");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
+		FString OptionalWorkingDirectory = "C:\\Users\\andre\\PycharmProjects\\RL_Module\\";
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params")
-	bool bRunOnBeginPlay = true;
+		bool bRunOnBeginPlay = true;
 };
