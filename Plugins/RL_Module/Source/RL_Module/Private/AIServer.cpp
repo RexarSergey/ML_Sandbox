@@ -32,7 +32,7 @@ void AAIServer::BeginPlay()
 	GetWorldTimerManager().SetTimer(Handle1, this,
 		&AAIServer::TCPConnectionListener, 0.01, true);
 
-	NotifySocket = CreateTCPConnectionNotifier(FString("Notify"), Host, Port-1, 65507u);
+	NotifySocket = CreateTCPConnectionNotifier(FString("Notify"), Host, Port - 1, 65507u);
 	if (!NotifySocket)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Socket create failed"));
@@ -280,9 +280,8 @@ void AAIServer::ShutDownServer() {
 
 void AAIServer::RunFit()
 {
-	FString pythonPath = "";
 	if (PythonPath == "") {
-		pythonPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\venv\\Scripts\\python.exe";
+		PythonPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\venv\\Scripts\\python.exe";
 	}
 	FString savePath;
 	if (Enviroment->SaveDirectory == "") {
@@ -311,14 +310,13 @@ void AAIServer::RunFit()
 
 	FString params = PythonProgrammFitPath + " " + Host + " " + FString::FromInt(Port)
 		+ " " + savePath + " " + loadPath;
-	ProcHandle = FPlatformProcess::CreateProc(*pythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
+	ProcHandle = FPlatformProcess::CreateProc(*PythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
 }
 
 void AAIServer::RunAI()
 {
-	FString pythonPath = "";
 	if (PythonPath == "") {
-		pythonPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\venv\\Scripts\\python.exe";
+		PythonPath = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\venv\\Scripts\\python.exe";
 	}
 	FString savePath;
 	if (Enviroment->SaveDirectory == "") {
@@ -348,7 +346,7 @@ void AAIServer::RunAI()
 
 	FString params = PythonProgrammRunPath + " " + Host + " " + FString::FromInt(Port)
 		+ " " + savePath + " " + loadPath;
-	ProcHandle = FPlatformProcess::CreateProc(*pythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
+	ProcHandle = FPlatformProcess::CreateProc(*PythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
 }
 
 void AAIServer::Step(TArray<float> Action)
