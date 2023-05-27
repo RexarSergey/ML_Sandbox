@@ -55,3 +55,11 @@ enum EOptimizer
 	RMSprop		UMETA(DisplayName = "RMSprop"),
 	SGD    UMETA(DisplayName = "SGD"),
 };
+
+UENUM(BlueprintType)
+enum ERLMethod
+{
+	DQN     UMETA(DisplayName = "DQN"),
+	DDPG		UMETA(DisplayName = "DDPG"),
+	Custom UMETA(DisplayName = "Custom"),
+};

@@ -43,10 +43,10 @@ struct RL_MODULE_API FDQNLearningStruct
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space Box (ObservationSpace)")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,  DisplayName = "ObservationSpace Low", Category = "Gym Space Box (ObservationSpace)")
 	TArray<float> Low;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space Box (ObservationSpace)")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "ObservationSpace High", Category = "Gym Space Box (ObservationSpace)")
 	TArray<float> High;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gym Space Box (ActionSpace)")

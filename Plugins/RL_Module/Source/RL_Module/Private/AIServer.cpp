@@ -303,12 +303,12 @@ void AAIServer::RunFit()
 		OptionalWorkingDirectory = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\python_code\\";
 	}
 
-	if (PythonProgrammFitPath == "") {
-		PythonProgrammFitPath = "release\\run_fit.py";
+	if (PythonProgramFitPath == "") {
+		PythonProgramFitPath = "release\\run_fit.py";
 	}
 
 
-	FString params = PythonProgrammFitPath + " " + Host + " " + FString::FromInt(Port)
+	FString params = PythonProgramFitPath + " " + Host + " " + FString::FromInt(Port)
 		+ " " + savePath + " " + loadPath;
 	ProcHandle = FPlatformProcess::CreateProc(*PythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
 }
@@ -338,13 +338,13 @@ void AAIServer::RunAI()
 		OptionalWorkingDirectory = FPaths::ProjectPluginsDir() + "RL_Module\\Content\\python_code\\";
 	}
 
-	if (PythonProgrammRunPath == "") {
-		PythonProgrammRunPath = "release\\run_ai.py";
+	if (PythonProgramRunPath == "") {
+		PythonProgramRunPath = "release\\run_ai.py";
 
 	}
 
 
-	FString params = PythonProgrammRunPath + " " + Host + " " + FString::FromInt(Port)
+	FString params = PythonProgramRunPath + " " + Host + " " + FString::FromInt(Port)
 		+ " " + savePath + " " + loadPath;
 	ProcHandle = FPlatformProcess::CreateProc(*PythonPath, *params, true, false, false, nullptr, 1, *OptionalWorkingDirectory, nullptr);
 }

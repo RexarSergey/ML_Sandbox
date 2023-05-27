@@ -87,14 +87,14 @@ public:
 		int32 Port;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Script to execute", Category = "Server Params|Advanced")
 		FString PythonPath = FString("RL_Module\\Content\\venv\\Scripts\\python.exe");
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
-		FString PythonProgrammFitPath = "";
+		FString PythonProgramFitPath = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
-		FString PythonProgrammRunPath = "";
+		FString PythonProgramRunPath = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Params|Advanced")
 		FString OptionalWorkingDirectory = "";

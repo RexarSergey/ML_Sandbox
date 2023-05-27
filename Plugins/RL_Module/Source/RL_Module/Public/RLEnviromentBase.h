@@ -56,12 +56,17 @@ public:
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Learning Type")
+		TEnumAsByte<ERLMethod> LearningType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Current Action")
 	TArray<float> Action;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save and Load")
 		FString SaveFileName = "agent_name";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save and Load")
+		FString LoadFileName = "agent_name";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save and Load|Advanced")
 		FString SaveDirectory = "";
