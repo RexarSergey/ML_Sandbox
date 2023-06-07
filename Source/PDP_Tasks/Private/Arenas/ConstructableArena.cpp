@@ -13,7 +13,7 @@ void AConstructableArena::BeginPlay()
 	Super::BeginPlay();
 
 	SetupFloor();
-	SetupWall();
+	//SetupWall();
 	SetupOther();
 }
 
@@ -27,6 +27,7 @@ void AConstructableArena::SetupFloor()
 		AArenaComponent_ConstructableObj* ConstructableObj = Cast<AArenaComponent_ConstructableObj>(Component);
 		ConstructableObj->FixAllConnections();
 	}
+	SetupWall();
 }
 
 void AConstructableArena::SetupWall()
@@ -48,6 +49,6 @@ void AConstructableArena::SetupOther()
 
 	for (AArenaComponent_Base* Component : OtherList)
 	{
-		Component->SetActorLocation(GetActorLocation());
+		//Component->SetActorLocation(GetActorLocation());
 	}
 }
