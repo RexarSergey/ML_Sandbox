@@ -22,7 +22,8 @@ def run_fit():
             model.fit()
             model.save_agent(sys.argv[3])
         return env.ready
-    except:
+    except Exception as e:
+        print("Error: ", str(e))
         return False
 
 

@@ -25,13 +25,14 @@ def run_ai():
             print('Got Done')
 
         return env.ready
-    except:
+    except Exception as e:
+        print(e)
         return False
 
 
 try_run = True
 while try_run:
-    print("Try fit...")
+    print("Try run...")
     try_run = not run_ai()
     time.sleep(1)
 time.sleep(100)

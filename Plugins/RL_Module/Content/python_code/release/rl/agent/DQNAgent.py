@@ -4,7 +4,7 @@ import gym
 import numpy as np
 from rl.agents import DQNAgent
 from rl.memory import SequentialMemory
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.models import Sequential
 
 from release.client.RLConfig import RLConfig
@@ -20,20 +20,6 @@ class UnrealDQNAgent:
         self.dqn_struct = None
         self.states = None
         self.actions = None
-        # self.dqn_struct = env.client.get_dqn_struct()
-        # print("dqn data: ", self.dqn_struct)
-        #
-        # self.env = env
-        # self.env.action_space = gym.spaces.Discrete(self.dqn_struct['actionLength'])
-        # self.env.observation_space = gym.spaces.Box(low=np.array(self.dqn_struct['low']),
-        #                                             high=np.array(self.dqn_struct['high']))
-        #
-        # self.states = env.observation_space.shape
-        # self.actions = env.action_space.n
-        #
-        # self.model = None
-        # self.dqn = None
-        # self.policy = None
 
     def build_from_file(self, path):
         self.load_struct(path)
@@ -51,10 +37,10 @@ class UnrealDQNAgent:
         self.env.action_space = gym.spaces.Discrete(self.dqn_struct['actionLength'])
         self.env.observation_space = gym.spaces.Box(low=np.array(self.dqn_struct['low']),
                                                     high=np.array(self.dqn_struct['high']))
-
-        self.states = self.env.observation_space.shape
+        print('action space:', self.env.action_space)
+        print('observation space', self.env.observation_space)
+        self.states = (1, self.env.observation_space.shape[0])
         self.actions = self.env.action_space.n
-
         self.build_model()
         self.build_agent()
 
@@ -68,22 +54,27 @@ class UnrealDQNAgent:
             neurones_count = self.dqn_struct['network'][i]
             activation = self.dqn_struct['activations'][i]
             self.model.add(Dense(neurones_count, activation=activation))
+        self.model.add(Flatten())
         self.model.add(Dense(self.actions, activation='linear'))
         return self.model
 
     def build_agent(self):
         self.policy = RLConfig.ue_policy[self.dqn_struct['policy']]  # customise
         memory = SequentialMemory(limit=50000, window_length=1)
+        print("model compile")
         self.dqn = DQNAgent(model=self.model,
                             memory=memory,
                             policy=self.policy,
                             nb_actions=self.actions,
                             nb_steps_warmup=self.dqn_struct['stepsWarmup'],
                             target_model_update=self.dqn_struct['targetModelUpdate'])  # customise
+        print("model compile done")
         metrics = self.make_metrics()
         optimizer = RLConfig.ue_optimizers[self.dqn_struct['optimizer']]
+        print("Compile Agent...")
         self.dqn.compile(optimizer(learning_rate=self.dqn_struct['learningRate']),  # customise
                          metrics=metrics)  # customise
+        print("Compile Done")
         return self.dqn
 
     def fit(self):

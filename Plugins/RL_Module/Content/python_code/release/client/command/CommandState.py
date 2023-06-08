@@ -22,7 +22,7 @@ class CommandState(CommandBase):
 
             if self.log_action:
                 print("get: command state")
-            return received['state'][0]
+            return received['state']
         except:
             print("CommandState: connection failed or interrupted")
 
